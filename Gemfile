@@ -9,4 +9,3 @@ gem 'dotenv'
 
 gem 'oga', '~> 3.2'
 gem 'pry'
-gem 'open-uri'
