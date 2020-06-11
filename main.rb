@@ -5,29 +5,26 @@ require 'oga'
 require 'pry'
 
 def take_song
-  url = 'https://maximum.ru/'
+  url = 'https://onlineradiobox.com/ru/maximum/playlist/'
   html = open(url)
   doc = Oga.parse_html(html)
 
-  doc.css('.track-animation').each do |m|
-    artist = m.at_css('.artist').text
-    song = m.at_css('.song').text
-
-    @artist_song = Song.new(artist, song)
+  doc.css('tr.active').each do |m|
+    artist_song =  m.at_css('a.ajax').text
+    @artist_song = Song.new(artist_song)
   end
   @artist_song
 end
 
 class Song
-  attr_reader :artist, :song
+  attr_reader :artist_song
 
-  def initialize (artist, song)
-    @artist = artist
-    @song = song
+  def initialize (artist_song)
+    @artist_song = artist_song
   end
 
   def to_s
-    "#{artist} - #{song}"
+    "-- #{artist_song} --"
   end
 end
 
@@ -38,7 +35,7 @@ Telegram::Bot::Client.run(token) do |bot|
     case message.text
     when '/start'
       bot.api.send_message(chat_id: message.chat.id, text: "Hello, #{message.from.first_name} now play:
- -- #{take_song} --")
+  #{take_song}")
     when '/stop'
       bot.api.send_message(chat_id: message.chat.id, text: "Bye, #{message.from.first_name}")
     end
