@@ -5,12 +5,12 @@ require 'oga'
 require 'pry'
 
 def take_song
-  url = 'https://onlineradiobox.com/ru/maximum/playlist/'
+  url = 'http://online-red.com/radio/playlist/Maximum.html'
   html = open(url)
   doc = Oga.parse_html(html)
 
-  doc.css('tr.active').each do |m|
-    artist_song =  m.at_css('a.ajax').text
+  doc.css('.track').each do |m|
+    artist_song = m.text.chomp
     @artist_song = Song.new(artist_song)
   end
   @artist_song
