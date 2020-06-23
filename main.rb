@@ -3,7 +3,7 @@ require 'dotenv/load'
 require 'open-uri'
 require 'oga'
 require 'pry'
-require_relative 'song'
+require_relative 'lib/song'
 
 def take_song
   url = 'http://online-red.com/radio/playlist/Maximum.html'
